@@ -76,14 +76,31 @@
         let number = document.getElementById("number").value;
         let color = document.getElementById("inputGroupSelect01").value;
         let count = document.getElementById("inputGroupSelect02").value;
-        if(color == "Choose..."){
+        if (name == ""){
+            alert("이름을 입력해주세요")
+        } else if(color == "Choose..."){
             alert("색상을 선택해주세요")
         } else if (count == "Choose..."){
             alert("수량을 선택해주세요")
+        } else if (address == ""){
+            alert("주소를 입력해주세요")
+        } else if (number == ""){
+            alert("휴대전화 번호를 입력해주세요")
         } else {
             alert("다음 주문 내용이 맞습니까? \n주문자 : " + name  + "\n색상 : " + color + "\n수량 : " + count);    
         }
     }
+
+    window.addEventListener("load", function(event) {
+        $.ajax({
+            type : "GET", 
+            url :  "https://api.manana.kr/exchange/rate.json",
+            success : function(response) {
+                var rate = response[1]["rate"];
+                $("#ex_rate").text(rate);
+            }
+        })
+  });
 </script>
 
 <body>
@@ -93,6 +110,8 @@
     <h1 class="productTitle">iPhone SE </h1>
     <h3 class="price">  가격 : 550,000원</h3>
     <p>[64GB 버젼] iPhone 사상 가장 강력한 칩. 가장 많이 보급된 사이즈. 가장 부담 없는 가격까지. 당신이 손꼽아 기다린 그 모델. 바로 iPhone SE입니다.</p>
+    <h5> 현재 환율 : <span id = "ex_rate"></span></h5>
+
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">주문자 이름</span>
