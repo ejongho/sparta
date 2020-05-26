@@ -76,6 +76,7 @@
         let number = document.getElementById("number").value;
         let color = document.getElementById("inputGroupSelect01").value;
         let count = document.getElementById("inputGroupSelect02").value;
+        regExp = /^01(?:0|1|[6-9])[.-]?(?:\d{3}|\d{4})[.-]?\d{4}$/;
         if (name == ""){
             alert("이름을 입력해주세요")
         } else if(color == "Choose..."){
@@ -86,7 +87,10 @@
             alert("주소를 입력해주세요")
         } else if (number == ""){
             alert("휴대전화 번호를 입력해주세요")
-        } else {
+        } else if (!regExp.test(number)) {
+            console.log(number);
+            alert("휴대전화 형식이 아닙니다")
+        }else {
             alert("다음 주문 내용이 맞습니까? \n주문자 : " + name  + "\n색상 : " + color + "\n수량 : " + count);    
         }
     }
@@ -153,9 +157,9 @@
     </div>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="number" id="basic-addon1">주문자 연락처</span>
+            <span class="input-group-text"  id="basic-addon1">주문자 연락처</span>
         </div>
-        <input type="text" class="form-control" placeholder="Phone" aria-label="Phone"
+        <input type="text" id="number" class="form-control" placeholder="Phone" aria-label="Phone"
             aria-describedby="basic-addon1">
     </div>
 
