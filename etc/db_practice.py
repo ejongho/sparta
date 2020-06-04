@@ -11,7 +11,6 @@ data = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&d
 
 # HTML을 BeautifulSoup이라는 라이브러리를 활용해 검색하기 용이한 상태로 만듦
 soup = BeautifulSoup(data.text, 'html.parser')
-
 # select를 이용해서, tr들을 불러오기
 movies = soup.select('#old_content > table > tbody > tr')
 

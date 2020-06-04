@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+</head>
+<style>
+    * {
+        font-family: 'Do Hyeon', sans-serif;
+    }
+
+    .prodcutImg {
+        width: 500px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    body {
+        width: 700px;
+        margin: 0 auto;
+    }
+
+    .input-group {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    .productTitle {
+        display: inline-block;
+        width: 220px;
+    }
+
+    .price {
+        display: inline;
+        font-size: 20px;
+    }
+
+    .btnPur {
+        background-color: gray;
+        width: 130px;
+        height: 45px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        display: block;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(50, 50, 50);
+
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('tbody').empty()
+        show_order();
+    });
+
+    function purchase() {
+        let name = document.getElementById("name").value;
+        let address = document.getElementById("address").value;
+        let number = document.getElementById("number").value;
+        let color = document.getElementById("inputGroupSelect01").value;
+        let count = document.getElementById("inputGroupSelect02").value;
+        regExp = /^01(?:0|1|[6-9])[.-]?(?:\d{3}|\d{4})[.-]?\d{4}$/;
+        if (name == "") {
+            alert("이름을 입력해주세요")
+        } else if (color == "Choose...") {
+            alert("색상을 선택해주세요")
+        } else if (count == "Choose...") {
+            alert("수량을 선택해주세요")
+        } else if (address == "") {
+            alert("주소를 입력해주세요")
+        } else if (number == "") {
+            alert("휴대전화 번호를 입력해주세요")
+        } else if (!regExp.test(number)) {
+            console.log(number);
+            alert("휴대전화 형식이 아닙니다")
+        } else {
+            alert("다음 주문 내용이 맞습니까? \n주문자 : " + name + "\n색상 : " + color + "\n수량 : " + count);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/order",
+            data: {
+                name_give: name,
+                color_give: color,
+                count_give: count,
+                address_give: address,
+                number_give: number
+            },
+            success: function (response) {
+                if (response['result'] == 'success') {
+                    window.location.reload()
+                }
+
+            }
+        })
+    }
+
+    window.addEventListener("load", function (event) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            success: function (response) {
+                var rate = response[1]["rate"];
+                $("#ex_rate").text(rate);
+            }
+        })
+    });
+
+    function show_order() {
+        $.ajax({
+            type: "GET",
+            url: "/order",
+            data: {},
+            success: function (response) {
+                ords = response['list'];
+                for (i = 0; i < ords.length; i++) {
+                    let name = ords[i]['name']
+                    let color = ords[i]['color']
+                    let count = ords[i]['count']
+                    let address = ords[i]['address']
+                    let number = ords[i]['number']
+                    let temp = `<tr>
+                                    <th scope="row">${name}</th>
+                                    <td>${color}</td>
+                                    <td>${count}</td>
+                                    <td>${address}</td>
+                                    <td>${number}</td>
+                                </tr>`
+                    $('tbody').append(temp);
+                }
+
+            }
+        })
+    }
+
+</script>
+
+<body>
+
+    <img class="prodcutImg"
+        src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-se-red-select-2020?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1586574260319">
+    <h1 class="productTitle">iPhone SE </h1>
+    <h3 class="price"> 가격 : 550,000원</h3>
+    <p>[64GB 버젼] iPhone 사상 가장 강력한 칩. 가장 많이 보급된 사이즈. 가장 부담 없는 가격까지. 당신이 손꼽아 기다린 그 모델. 바로 iPhone SE입니다.</p>
+    <h5> 현재 환율 : <span id="ex_rate"></span></h5>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">주문자 이름</span>
+        </div>
+        <input type="text" class="form-control" id="name" placeholder="Username" aria-label="Username"
+            aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">색상</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+            <option selected>Choose...</option>
+            <option value="red">red</option>
+            <option value="black">black</option>
+            <option value="white">white</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect02">수량</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect02">
+            <option selected>Choose...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">주소</span>
+        </div>
+        <input type="text" class="form-control" id="address" placeholder="Address" aria-label="Address"
+            aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">주문자 연락처</span>
+        </div>
+        <input type="text" id="number" class="form-control" placeholder="Phone" aria-label="Phone"
+            aria-describedby="basic-addon1">
+    </div>
+
+    <button onclick="purchase()" type="button" class="btnPur btn btn-primary" aria-pressed="false" autocomplete="off">
+        구매하기
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">색상</th>
+                <th scope="col">수량</th>
+                <th scope="col">주소</th>
+                <th scope="col">연락처</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>Otto</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>Otto</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

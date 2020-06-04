@@ -13,6 +13,7 @@ for music in musics:
     title = music.select_one('.info > .title').text.strip()
     artist = music.select_one('.info > .artist').text.strip()
     rank.span.decompose()
-    print(rank.text.strip(),  title,  artist)
+    rank = rank.text.strip()
+    print(rank,  title,  artist)
     
     
