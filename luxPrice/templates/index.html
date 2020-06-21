@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>LuxPrice(가제)</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // index.html 로드가 완료되면 자동으로 show_star() 함수를 호출합니다.
+            call_search();
+        });
+
+        function call_search() {
+            $.ajax({
+                type: 'GET',
+                url: '/search',
+                data: {'keyword' : 'Balenciaga'},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let msg = response['msg'];
+                        alert(msg);
+                    }
+                }
+            });
+        }
+    </script>
+    <style>
+        body {
+            width: 1280px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .header {
+            height: 100px;
+        }
+
+        .logo {
+            position: absolute;
+            width: 300px;
+            left: 50px;
+            height: 60px;
+            margin: 20px;
+            background-color: aquamarine;
+        }
+
+        .searchBox {
+            position: absolute;
+            width: 350px;
+            height: 40px;
+            margin: 20px;
+            right: 50px;
+        }
+
+        .input-group-text {
+            width: 45px
+        }
+
+        .listBox {
+            width: 1024px;
+            position: relative;
+            margin-left: 128px;
+            border: 1px solid;
+
+        }
+
+        .mainImage {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            display: inline-block;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .prdInfo {
+            display: inline-block;
+            width: 300px;
+            height: 250px;
+            border: 1px solid;
+            position: absolute;
+        }
+
+        .infoIndi {
+            display: block;
+            height: 20px;
+            margin-left: 15px;
+            margin-top: 20px;
+        }
+
+        .priceList {
+            display: inline-block;
+            width: 400px;
+            height: 250px;
+            border: 1px solid;
+            position: absolute;
+            right: 20px;
+        }
+
+        .priceIndi {
+            position: relative;
+            display: block;
+            width: 390px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+
+        .siteDiff {
+            position: absolute;
+            display: inline-block;
+            left: 15px;
+        }
+
+        .priceDiff {
+            position: absolute;
+            display: inline-block;
+            right: 20px;
+
+        }
+
+        .btn {
+            display: block;
+            right: 20px;
+            position: relative;
+            left: 900px;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .board {
+            width: 1240px;
+            position: relative;
+            left: 24px;
+            margin-bottom: 30px;
+        }
+
+
+        .card-columns {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div class='header'>
+        <div class="logo"></div>
+        <div class="input-group mb-3 searchBox">
+            <input type="text" class="form-control" placeholder="상품 번호나 브랜드를 입력해주세요" aria-label="Recipient's username"
+                aria-describedby="basic-addon2">
+            <div class="input-group-append" style="cursor:pointer">
+                <span class="input-group-text" id="basic-addon2"> search</span>
+            </div>
+        </div>
+    </div>
+    <div class="listBox">
+        <div class="mainImage"
+            style="background-image : url('https://cdn-images.farfetch-contents.com/comme-des-garcons-wallet-logo-print-tote-bag_14770240_25014374_1000.jpg?c=2')"></div>
+        <div class="prdInfo">
+            <div class="infoIndi brand">Gucci</div>
+            <div class="infoIndi prdName">Coeur T-shirt</div>
+            <div class="infoIndi prdCode">A20HJ108723100</div>
+        </div>
+        <div class="priceList">
+            <div class="priceIndi">
+                <span class="siteDiff">Farfetch</span>
+                <span class="priceDiff">1,000,000</span>
+            </div>
+            <div class="priceIndi">
+                <span class="siteDiff">Yoox</span>
+                <span class="priceDiff">1,100,000</span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-light"> 더 좋은 방법? </button>
+        <div>
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <a href="#" class="card-link"> link</a>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <a href="#" class="card-link"> link</a>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <a href="#" class="card-link"> link</a>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- <div class="board">
+
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">가여운 너구리</h5>
+                    <p class="card-text"> 그냥 네이버에서 병행수입으로 사는게 더 싸요</p>
+                    <a href="#" class="card-link"> link</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">가여운 너구리</h5>
+                    <p class="card-text"> 그냥 네이버에서 병행수입으로 사는게 더 싸요
+                        sdakfjasfsdlfsjdalfjasfsdfklsd;fj;sdfjk;sdakfjasfsdlfsjdalfjasfsdfklsd</p>
+                    <a href="#" class="card-link"> link</a>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+</html>

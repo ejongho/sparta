@@ -2,6 +2,8 @@ from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 import requests
+
+import requests
 from bs4 import BeautifulSoup
 
 from pymongo import MongoClient           # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
